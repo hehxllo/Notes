@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+属性的继承：调用父类的构造函数 call
+方法的继承：把父类的原型赋给子类的原型（对象的引用有问题） for in拷贝继承（jQuery也是采用拷贝继承）
+可视区宽document.documentElement.clientWidth-obj.offsetWidth
+<script>
+    function CreatePerson(name,age){
+        this.name=name;
+        this.age=age;
+    }
+    CreatePerson.prototype.showName=function () {
+        alert(this.name);
+    };
+    var person=new CreatePerson('小明',20);
+    person.showName();
+
+    function CreateStar(name,age,job) {
+        CreatePerson.call(this,name,job);
+        this.job=job;
+    }
+    for (var attr in CreatePerson.prototype){
+        CreateStar.prototype[attr]=CreatePerson.prototype[attr];
+        //函数是不能被修改的，只能重新定义
+    }
+    //CreateStar.prototype=CreatePerson.prototype;//存在问题
+    CreateStar.prototype.showJob=function () {
+        alert(this.job);
+    };
+    var star=new CreateStar('黄晓明',30,'演员');
+    console.dir(person);
+    console.dir(star);
+
+</script>
+</body>
+</html>
